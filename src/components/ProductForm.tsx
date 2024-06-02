@@ -24,6 +24,7 @@ const ProductForm = ({ product, onSubmit }: Props) => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<ProductFormData>({
     defaultValues: product,
@@ -39,6 +40,7 @@ const ProductForm = ({ product, onSubmit }: Props) => {
         try {
           setSubmitting(true);
           await onSubmit(formData);
+          reset();
         } catch (error) {
           toast.error("An unexpected error occurred");
         } finally {
@@ -49,7 +51,12 @@ const ProductForm = ({ product, onSubmit }: Props) => {
     >
       <Box>
         <TextField.Root className="max-w-sm">
-          <TextField.Input placeholder="Name" {...register("name")} size="3" />
+          <TextField.Input
+            placeholder="Name"
+            {...register("name")}
+            size="3"
+            autoFocus
+          />
         </TextField.Root>
         <ErrorMessage error={errors.name} />
       </Box>
@@ -72,10 +79,10 @@ const ProductForm = ({ product, onSubmit }: Props) => {
           render={({ field }) => (
             <Select.Root
               size="3"
-              defaultValue={product?.categoryId.toString() || ""}
+              defaultValue={product?.categoryId.toString() || undefined}
               onValueChange={(value) => field.onChange(+value)}
             >
-              <Select.Trigger placeholder="Category" />
+              <Select.Trigger placeholder="Category" aria-label="Category" />
               <Select.Content>
                 <Select.Group>
                   {categories?.map((category) => (

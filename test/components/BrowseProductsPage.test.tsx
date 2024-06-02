@@ -1,4 +1,3 @@
-import { Theme } from "@radix-ui/themes";
 import "@testing-library/jest-dom/vitest";
 import {
   render,
@@ -11,12 +10,10 @@ import React from "react";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { Category, Product } from "../../src/entities";
 import BrowseProducts from "../../src/pages/BrowseProductsPage";
-import { CartProvider } from "../../src/providers/CartProvider";
+import AllProvider from "../AllProvider";
 import { db, getProductByCategory } from "../mocks/db";
 import { server } from "../mocks/server";
 import { simulateDelay, simulateError } from "../utils";
-import AllProvider from "../AllProvider";
-import { wrap } from "module";
 
 describe("Browse Products", () => {
   const categories: Category[] = [];
